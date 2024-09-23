@@ -60,7 +60,7 @@ if 'PercentageofEducationlevelofresidents-secondary' not in data_clean.columns:
 st.title("Lebanon Education Levels by District")
 
 # Visualization 1: Box Plot for University Education Levels
-st.subheader("Distribution of University Education Levels by District")
+st.subheader("Distribution of Education Levels by District")
 # fig1 = px.box(data_clean, x='District', y='PercentageofEducationlevelofresidents-university', 
 #               title='University Education Levels by District', 
 #               labels={'PercentageofEducationlevelofresidents-university': 'University Education Level (%)'})
