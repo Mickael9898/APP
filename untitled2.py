@@ -96,13 +96,13 @@ data['PercentageofEducationlevelofresidents-secondary'] = pd.to_numeric(
 district_secondary_education = data.groupby('dists')['PercentageofEducationlevelofresidents-secondary'].mean().reset_index()
 
 # Create the pie chart using Plotly Express
-fig4 = px.pie(district_secondary_education, 
+fig750 = px.pie(district_secondary_education, 
              values='PercentageofEducationlevelofresidents-secondary', 
              names='dists',
              title='Secondary Education Percentage by District',
              hole=0.3)  # Optional: Adds a donut-style hole
 
-st.plotly_chart(fig4)
+st.plotly_chart(fig750)
 
 # Visualization 3: Stacked Bar Chart of Education Levels by District
 st.subheader("Stacked Bar Chart of Education Levels by District")
