@@ -126,38 +126,29 @@ fig_bar = px.bar(mount_lebanon_towns,
 
 st.plotly_chart(fig_bar)
 
-# Visualization 4: Bar chart for education levels in Baabda and Beit Meri with a switch button
-st.subheader("Education Levels in Baabda and Beit Meri")
+# Visualization 4: Two graphs with buttons to switch between vocational and elementary education levels
+st.subheader("Toggle Between Vocational and Elementary Education Levels by District")
 
-# Define the two towns to toggle between
-toggle_towns = ['Baabda', 'Beit Meri']
+# Define two buttons for toggling between visualizations
+button_vocational = st.button('Vocational Education Levels by District')
+button_elementary = st.button('Elementary Education Levels by District')
 
-# Normalize the town names by stripping spaces and converting to lowercase
-data_clean['Town_normalized'] = data_clean['Town'].str.strip().str.lower()
+# Visualization 1: Vocational Education Levels by District
+if button_vocational:
+    fig_vocational = px.bar(data_clean, 
+                            x='District', 
+                            y='PercentageofEducationlevelofresidents-vocational', 
+                            title="Vocational Education Levels by District",
+                            labels={'PercentageofEducationlevelofresidents-vocational': 'Vocational Education Level (%)'},
+                            barmode='group')
+    st.plotly_chart(fig_vocational)
 
-# Add a selectbox to switch between the two towns
-selected_town = st.radio("Select a town", toggle_towns)
-
-# Normalize the selected town
-normalized_town = selected_town.lower().strip()
-
-# Filter data for the selected town using normalized names
-town_data = data_clean[data_clean['Town_normalized'] == normalized_town]
-
-# Check if the selected town has valid data
-if not town_data.empty:
-    # Create a bar chart using Plotly Express for education levels in the selected town
-    fig_town = px.bar(town_data, 
-                      x='Town', 
-                      y=education_columns, 
-                      title=f"Education Levels in {selected_town}",
-                      labels={
-                          'value': 'Percentage (%)', 
-                          'variable': 'Education Level'
-                      },
-                      barmode='group')
-
-    # Display the bar chart in Streamlit
-    st.plotly_chart(fig_town)
-else:
-    st.warning(f"No data available for {selected_town}")
+# Visualization 2: Elementary Education Levels by District
+elif button_elementary:
+    fig_elementary = px.bar(data_clean, 
+                            x='District', 
+                            y='PercentageofEducationlevelofresidents-elementary', 
+                            title="Elementary Education Levels by District",
+                            labels={'PercentageofEducationlevelofresidents-elementary': 'Elementary Education Level (%)'},
+                            barmode='group')
+    st.plotly_chart(fig_elementary)
