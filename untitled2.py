@@ -107,50 +107,31 @@ st.plotly_chart(fig750)
 button3 = st.button('click here')
 button4 = st.button('click here for second viz')
 if button3:
-    fig2 = go.Figure()
+    filtered_data = data[data['Town'].isin(['Tyre', 'Beirut'])]
 
-    fig2.add_trace(go.Scatter(
-        x=data_clean['Town'],  # Replace 'Town' if your column for district names is different
-        y=data_clean['PercentageofSchooldropout'],
-        mode='lines+markers',
-        name='Percentage of School Dropout',
-        line=dict(color='red')
-    ))
-    
-    # Update layout
-    fig2.update_layout(
-        title="Percentage of School Dropout Across Districts",
-        xaxis_title="District",
-        yaxis_title="Dropout Percentage (%)",
-        legend_title="Dropout Rate",
-        hovermode="x unified"
-    )
+    # Create the bar chart using Plotly Express
+    fig2 = px.bar(filtered_data, 
+                 x='Town', 
+                 y='PercentageofSchooldropout', 
+                 title='Percentage of School Dropout in Tyre and Beirut', 
+                 labels={'PercentageofSchooldropout': 'Dropout Percentage (%)', 'Town': 'District'},
+                 color='Town')
     
     # Show the figure
     fig2.show()
 elif button4:
-    fig2 = go.Figure()
+    filtered_data = data[data['Town'].isin(['Tyre', 'Beirut'])]
 
-    fig2.add_trace(go.Scatter(
-        x=data_clean['Town'],  # Replace 'Town' if your column for district names is different
-        y=data_clean['PercentageofEducationlevelofresidents-highereducation'],
-        mode='lines+markers',
-        name='PercentageofEducationlevelofresidents-highereducation',
-        line=dict(color='red')
-    ))
-    
-    # Update layout
-    fig2.update_layout(
-        title="PercentageofEducationlevelofresidents-highereducation",
-        xaxis_title="District",
-        yaxis_title="Higher Education Percentage (%)",
-        legend_title="Higher Education Rate",
-        hovermode="x unified"
-    )
+    # Create the bar chart using Plotly Express
+    fig2 = px.bar(filtered_data, 
+                 x='Town', 
+                 y='PercentageofEducationlevelofresidents-highereducation', 
+                 title='Percentage of higher education in Tyre and Beirut', 
+                 labels={'PercentageofEducationlevelofresidents-highereducation': 'Higher Education Percentage (%)', 'Town': 'District'},
+                 color='Town')
     
     # Show the figure
     fig2.show()
-
 # Visualization 3: Stacked Bar Chart of Education Levels by District
 # st.subheader("Stacked Bar Chart of Education Levels by District")
 # district_education_levels = data_clean.groupby('District')[education_columns].mean().reset_index()
