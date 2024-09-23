@@ -104,32 +104,91 @@ fig750 = px.pie(district_secondary_education,
 
 st.plotly_chart(fig750)
 
-# Visualization 3: Stacked Bar Chart of Education Levels by District
+# Streamlit app layout
+st.title("Lebanon Education Levels by District")
+
+# Stacked Bar Chart of Education Levels by District
 st.subheader("Stacked Bar Chart of Education Levels by District")
 district_education_levels = data_clean.groupby('dists')[education_columns].mean().reset_index()
 
 fig3 = go.Figure()
-fig3.add_trace(go.Bar(x=district_education_levels['dists'], y=district_education_levels['PercentageofEducationlevelofresidents-university'], name='University Education', marker_color='indianred'))
 
-# Only add secondary education if the column exists
+# University Education
+fig3.add_trace(go.Bar(x=district_education_levels['dists'], 
+                      y=district_education_levels['PercentageofEducationlevelofresidents-university'], 
+                      name='University Education', 
+                      marker_color='indianred'))
+
+# Secondary Education: Check if the column exists
 if 'PercentageofEducationlevelofresidents-secondary' in data_clean.columns:
-    fig3.add_trace(go.Bar(x=district_education_levels['dists'], y=district_education_levels['PercentageofEducationlevelofresidents-secondary'], name='Secondary Education', marker_color='lightsalmon'))
+    fig3.add_trace(go.Bar(x=district_education_levels['dists'], 
+                          y=district_education_levels['PercentageofEducationlevelofresidents-secondary'], 
+                          name='Secondary Education', 
+                          marker_color='lightsalmon'))
+else:
+    st.warning("The 'PercentageofEducationlevelofresidents-secondary' column is missing from the dataset.")
 
-    fig3.add_trace(go.Bar(x=district_education_levels['dists'], y=district_education_levels['PercentageofEducationlevelofresidents-vocational'], name='Vocational Education', marker_color='lightseagreen'))
-    fig3.add_trace(go.Bar(x=district_education_levels['dists'], y=district_education_levels['PercentageofEducationlevelofresidents-elementary'], name='Elementary Education', marker_color='lightblue'))
+# Vocational Education
+fig3.add_trace(go.Bar(x=district_education_levels['dists'], 
+                      y=district_education_levels['PercentageofEducationlevelofresidents-vocational'], 
+                      name='Vocational Education', 
+                      marker_color='lightseagreen'))
 
-    fig3.update_layout(barmode='stack', title='Education Levels by District', xaxis_title='District', yaxis_title='Percentage (%)', legend_title='Education Level')
-    st.plotly_chart(fig3)
+# Elementary Education
+fig3.add_trace(go.Bar(x=district_education_levels['dists'], 
+                      y=district_education_levels['PercentageofEducationlevelofresidents-elementary'], 
+                      name='Elementary Education', 
+                      marker_color='lightblue'))
 
-# Visualization 4: Line Chart of Education Levels
+# Update the layout for the stacked bar chart
+fig3.update_layout(barmode='stack', 
+                   title='Education Levels by District', 
+                   xaxis_title='District', 
+                   yaxis_title='Percentage (%)', 
+                   legend_title='Education Level')
+
+# Display the chart
+st.plotly_chart(fig3)
+
+# Line Chart of Education Levels Across Districts
 st.subheader("Education Levels Across Districts")
 district_avg_education = data_clean.groupby('dists')[education_columns].mean().reset_index()
 
 fig4 = go.Figure()
-fig4.add_trace(go.Scatter(x=district_avg_education['dists'], y=district_avg_education['PercentageofEducationlevelofresidents-university'], mode='lines+markers', name='University Education', line=dict(color='blue')))
-fig4.add_trace(go.Scatter(x=district_avg_education['dists'], y=district_avg_education['PercentageofEducationlevelofresidents-vocational'], mode='lines+markers', name='Vocational Education', line=dict(color='green')))
-fig4.add_trace(go.Scatter(x=district_avg_education['dists'], y=district_avg_education['PercentageofEducationlevelofresidents-elementary'], mode='lines+markers', name='Elementary Education', line=dict(color='orange')))
-fig4.add_trace(go.Scatter(x=district_avg_education['dists'], y=district_avg_education['PercentageofEducationlevelofresidents-illeterate'], mode='lines+markers', name='Illiteracy', line=dict(color='red')))
 
-fig4.update_layout(title='Education Levels Across Districts', xaxis_title='District', yaxis_title='Percentage (%)', legend_title='Education Level')
+# University Education
+fig4.add_trace(go.Scatter(x=district_avg_education['dists'], 
+                          y=district_avg_education['PercentageofEducationlevelofresidents-university'], 
+                          mode='lines+markers', 
+                          name='University Education', 
+                          line=dict(color='blue')))
+
+# Vocational Education
+fig4.add_trace(go.Scatter(x=district_avg_education['dists'], 
+                          y=district_avg_education['PercentageofEducationlevelofresidents-vocational'], 
+                          mode='lines+markers', 
+                          name='Vocational Education', 
+                          line=dict(color='green')))
+
+# Elementary Education
+fig4.add_trace(go.Scatter(x=district_avg_education['dists'], 
+                          y=district_avg_education['PercentageofEducationlevelofresidents-elementary'], 
+                          mode='lines+markers', 
+                          name='Elementary Education', 
+                          line=dict(color='orange')))
+
+# Illiteracy
+fig4.add_trace(go.Scatter(x=district_avg_education['dists'], 
+                          y=district_avg_education['PercentageofEducationlevelofresidents-illeterate'], 
+                          mode='lines+markers', 
+                          name='Illiteracy', 
+                          line=dict(color='red')))
+
+# Update the layout for the line chart
+fig4.update_layout(title='Education Levels Across Districts', 
+                   xaxis_title='District', 
+                   yaxis_title='Percentage (%)', 
+                   legend_title='Education Level')
+
+# Display the chart
 st.plotly_chart(fig4)
