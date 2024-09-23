@@ -81,8 +81,8 @@ elif button2:
 
 # Visualization 2: Pie Chart of University Education Distribution
 st.subheader("University Education Distribution by District")
-district_edu = data_clean.groupby('District')['PercentageofEducationlevelofresidents-university'].mean().reset_index()
-fig2 = px.pie(district_edu, values='PercentageofEducationlevelofresidents-university', names='District', 
+district_edu = data_clean.groupby('District')['PercentageofEducationlevelofresidents-illeterate'].mean().reset_index()
+fig2 = px.pie(district_edu, values='PercentageofEducationlevelofresidents-illeterate', names='District', 
               title='University Education Distribution', hole=0.3)
 st.plotly_chart(fig2)
 
