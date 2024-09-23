@@ -130,7 +130,7 @@ st.plotly_chart(fig_bar)
 st.subheader("Education Levels in Baabda and Beit Meri")
 
 # Define the two towns to toggle between
-toggle_towns = ['Sidon', 'Beit Meri']
+toggle_towns = ['Byblos', 'Beit Meri']
 
 # Add a selectbox to switch between the two towns
 selected_town = st.radio("Select a town", toggle_towns)
