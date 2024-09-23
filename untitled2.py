@@ -132,18 +132,16 @@ st.subheader("Education Levels in Baabda and Beit Meri")
 # Define the two towns to toggle between
 toggle_towns = ['Baabda', 'Beit Meri']
 
-# Check available towns in the dataset (useful for debugging town names)
-available_towns = data_clean['Town'].unique()
-st.write("Available towns in dataset:", available_towns)
-
-# Add a radio button to switch between the two towns
-selected_town = st.radio("Select a town", toggle_towns)
-
-# Normalize town names by stripping spaces and converting to lowercase
+# Normalize the town names by stripping spaces and converting to lowercase
 data_clean['Town_normalized'] = data_clean['Town'].str.strip().str.lower()
 
-# Filter data for the selected town using normalized names
+# Add a selectbox to switch between the two towns
+selected_town = st.radio("Select a town", toggle_towns)
+
+# Normalize the selected town
 normalized_town = selected_town.lower().strip()
+
+# Filter data for the selected town using normalized names
 town_data = data_clean[data_clean['Town_normalized'] == normalized_town]
 
 # Check if the selected town has valid data
