@@ -39,6 +39,9 @@ def map_town_to_district(town_name):
         return 'Beqaa'
     return 'Mount Lebanon'
 
+dists = data['refArea'].str.split('/').str[4]
+data['dists'] = dists
+st.write(data)
 # Apply mapping function
 data['District'] = data['Town'].apply(map_town_to_district)
 
