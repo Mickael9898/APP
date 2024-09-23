@@ -65,11 +65,19 @@ st.subheader("Distribution of University Education Levels by District")
 #               title='University Education Levels by District', 
 #               labels={'PercentageofEducationlevelofresidents-university': 'University Education Level (%)'})
 # st.plotly_chart(fig1)
-
-fig1 = px.box(data, x='dists', y='PercentageofEducationlevelofresidents-university', 
-              title='University Education Levels by District', 
-              labels={'PercentageofEducationlevelofresidents-university': 'University Education Level (%)'})
-st.plotly_chart(fig1)
+button1 = st.button('click here')
+button2 = st.button('click here for second viz')
+if button1:
+    fig1 = px.box(data, x='dists', y='PercentageofEducationlevelofresidents-university', 
+                  title='University Education Levels by District', 
+                  labels={'PercentageofEducationlevelofresidents-university': 'University Education Level (%)'})
+    st.plotly_chart(fig1)
+elif button2:
+    fig1 = px.box(data, x='dists', y='PercentageofEducationlevelofresidents-vocational', 
+                  title='University Education Levels by District', 
+                  labels={'PercentageofEducationlevelofresidents-university': 'University Education Level (%)'})
+    st.plotly_chart(fig1)
+    
 
 # Visualization 2: Pie Chart of University Education Distribution
 st.subheader("University Education Distribution by District")
