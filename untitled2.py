@@ -61,7 +61,12 @@ st.title("Lebanon Education Levels by District")
 
 # Visualization 1: Box Plot for University Education Levels
 st.subheader("Distribution of University Education Levels by District")
-fig1 = px.box(data_clean, x='District', y='PercentageofEducationlevelofresidents-university', 
+# fig1 = px.box(data_clean, x='District', y='PercentageofEducationlevelofresidents-university', 
+#               title='University Education Levels by District', 
+#               labels={'PercentageofEducationlevelofresidents-university': 'University Education Level (%)'})
+# st.plotly_chart(fig1)
+
+fig1 = px.box(data, x='dists', y='PercentageofEducationlevelofresidents-university', 
               title='University Education Levels by District', 
               labels={'PercentageofEducationlevelofresidents-university': 'University Education Level (%)'})
 st.plotly_chart(fig1)
