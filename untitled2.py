@@ -89,14 +89,20 @@ data['PercentageofEducationlevelofresidents-illeterate'] = pd.to_numeric(
 st.title("Illiteracy Percentage Across Districts")
 
 # Group the data by 'dists' (Districts) and get the mean illiteracy percentage per district
-district_illiteracy = data.groupby('dists')['PercentageofEducationlevelofresidents-illeterate'].mean().reset_index()
+data['PercentageofEducationlevelofresidents-secondary'] = pd.to_numeric(
+    data['PercentageofEducationlevelofresidents-secondary'], errors='coerce')
 
-# Create the pie chart
-fig = px.pie(district_illiteracy, values='PercentageofEducationlevelofresidents-illeterate', names='dists',
-             title="Illiteracy Percentage by District", hole=0.3)
+# Group the data by districts and sum the secondary education percentages
+district_secondary_education = data.groupby('dists')['PercentageofEducationlevelofresidents-secondary'].mean().reset_index()
 
-# Show the pie chart in the Streamlit app
-st.plotly_chart(fig)
+# Create the pie chart using Plotly Express
+fig4 = px.pie(district_secondary_education, 
+             values='PercentageofEducationlevelofresidents-secondary', 
+             names='dists',
+             title='Secondary Education Percentage by District',
+             hole=0.3)  # Optional: Adds a donut-style hole
+
+st.plotly_chart(fig4)
 
 # Visualization 3: Stacked Bar Chart of Education Levels by District
 st.subheader("Stacked Bar Chart of Education Levels by District")
