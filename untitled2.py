@@ -79,8 +79,8 @@ elif button2:
     st.plotly_chart(fig1)
     
 
-# Visualization 2: Pie Chart of University Education Distribution
-st.subheader("University Education Distribution by District")
+# Visualization 2: Pie Chart of Illetracy Distribution
+st.subheader("Education Level by District")
 district_edu = data_clean.groupby('District')['PercentageofEducationlevelofresidents-illeterate'].mean().reset_index()
 data['PercentageofEducationlevelofresidents-illeterate'] = pd.to_numeric(
     data['PercentageofEducationlevelofresidents-illeterate'], errors='coerce')
@@ -89,17 +89,17 @@ data['PercentageofEducationlevelofresidents-illeterate'] = pd.to_numeric(
 st.title("Illiteracy Percentage Across Districts")
 
 # Group the data by 'dists' (Districts) and get the mean illiteracy percentage per district
-data['PercentageofEducationlevelofresidents-vocational'] = pd.to_numeric(
-    data['PercentageofEducationlevelofresidents-vocational'], errors='coerce')
+data['PercentageofEducationlevelofresidents-illeterate'] = pd.to_numeric(
+    data['PercentageofEducationlevelofresidents-illeterate'], errors='coerce')
 
 # Group the data by districts and sum the secondary education percentages
-district_secondary_education = data.groupby('dists')['PercentageofEducationlevelofresidents-vocational'].mean().reset_index()
+district_secondary_education = data.groupby('dists')['PercentageofEducationlevelofresidents-illeterate'].mean().reset_index()
 
 # Create the pie chart using Plotly Express
 fig750 = px.pie(district_secondary_education, 
-             values='PercentageofEducationlevelofresidents-vocational', 
+             values='PercentageofEducationlevelofresidents-illeterate', 
              names='dists',
-             title='Secondary Education Percentage by District',
+             title='Illeteracy Percentage by District',
              hole=0.3)  # Optional: Adds a donut-style hole
 
 st.plotly_chart(fig750)
