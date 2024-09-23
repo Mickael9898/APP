@@ -82,9 +82,21 @@ elif button2:
 # Visualization 2: Pie Chart of University Education Distribution
 st.subheader("University Education Distribution by District")
 district_edu = data_clean.groupby('District')['PercentageofEducationlevelofresidents-illeterate'].mean().reset_index()
-fig2 = px.pie(data, values='PercentageofEducationlevelofresidents-illeterate', names='District', 
-              title='University Education Distribution', hole=0.3)
-st.plotly_chart(fig2)
+data['PercentageofEducationlevelofresidents-illeterate'] = pd.to_numeric(
+    data['PercentageofEducationlevelofresidents-illeterate'], errors='coerce')
+
+# Creating a pie chart for illiteracy percentage across districts
+st.title("Illiteracy Percentage Across Districts")
+
+# Group the data by 'dists' (Districts) and get the mean illiteracy percentage per district
+district_illiteracy = data.groupby('dists')['PercentageofEducationlevelofresidents-illeterate'].mean().reset_index()
+
+# Create the pie chart
+fig = px.pie(district_illiteracy, values='PercentageofEducationlevelofresidents-illeterate', names='dists',
+             title="Illiteracy Percentage by District", hole=0.3)
+
+# Show the pie chart in the Streamlit app
+st.plotly_chart(fig)
 
 # Visualization 3: Stacked Bar Chart of Education Levels by District
 st.subheader("Stacked Bar Chart of Education Levels by District")
