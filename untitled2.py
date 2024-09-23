@@ -126,45 +126,24 @@ fig_bar = px.bar(mount_lebanon_towns,
 
 st.plotly_chart(fig_bar)
 
-# Line Chart of Education Levels Across Districts
-st.subheader("Education Levels Across Districts")
-district_avg_education = data_clean.groupby('dists')[education_columns].mean().reset_index()
+# Visualization 4: Bar chart for education levels in Sour and Saaideh with a switch button
+st.subheader("Education Levels in Sour and Saaideh")
 
-fig4 = go.Figure()
+# Add a selectbox to switch between the two towns
+selected_town = st.radio("Select a town", ['Sour', 'Saaideh'])
 
-# University Education
-fig4.add_trace(go.Scatter(x=district_avg_education['dists'], 
-                          y=district_avg_education['PercentageofEducationlevelofresidents-university'], 
-                          mode='lines+markers', 
-                          name='University Education', 
-                          line=dict(color='blue')))
+# Filter data for the selected town
+town_data = data_clean[data_clean['Town'] == selected_town]
 
-# Vocational Education
-fig4.add_trace(go.Scatter(x=district_avg_education['dists'], 
-                          y=district_avg_education['PercentageofEducationlevelofresidents-vocational'], 
-                          mode='lines+markers', 
-                          name='Vocational Education', 
-                          line=dict(color='green')))
+# Create a bar chart using Plotly Express for education levels in the selected town
+fig_town = px.bar(town_data, 
+                  x='Town', 
+                  y=education_columns, 
+                  title=f"Education Levels in {selected_town}",
+                  labels={
+                      'value': 'Percentage (%)', 
+                      'variable': 'Education Level'
+                  },
+                  barmode='group')
 
-# Elementary Education
-fig4.add_trace(go.Scatter(x=district_avg_education['dists'], 
-                          y=district_avg_education['PercentageofEducationlevelofresidents-elementary'], 
-                          mode='lines+markers', 
-                          name='Elementary Education', 
-                          line=dict(color='orange')))
-
-# Illiteracy
-fig4.add_trace(go.Scatter(x=district_avg_education['dists'], 
-                          y=district_avg_education['PercentageofEducationlevelofresidents-illeterate'], 
-                          mode='lines+markers', 
-                          name='Illiteracy', 
-                          line=dict(color='red')))
-
-# Update the layout for the line chart
-fig4.update_layout(title='Education Levels Across Districts', 
-                   xaxis_title='District', 
-                   yaxis_title='Percentage (%)', 
-                   legend_title='Education Level')
-
-# Display the chart
-st.plotly_chart(fig4)
+st.plotly_chart(fig_town)
