@@ -126,24 +126,32 @@ fig_bar = px.bar(mount_lebanon_towns,
 
 st.plotly_chart(fig_bar)
 
-# Visualization 4: Bar chart for education levels in Sour and Saaideh with a switch button
-st.subheader("Education Levels in Sour and Saaideh")
+# Visualization 4: Bar chart for education levels in Baabda and Beit Meri with a switch button
+st.subheader("Education Levels in Baabda and Beit Meri")
+
+# Define the two towns to toggle between
+toggle_towns = ['Baabda', 'Beit Meri']
 
 # Add a selectbox to switch between the two towns
-selected_town = st.radio("Select a town", ['Sour', 'Saaideh'])
+selected_town = st.radio("Select a town", toggle_towns)
 
 # Filter data for the selected town
 town_data = data_clean[data_clean['Town'] == selected_town]
 
-# Create a bar chart using Plotly Express for education levels in the selected town
-fig_town = px.bar(town_data, 
-                  x='Town', 
-                  y=education_columns, 
-                  title=f"Education Levels in {selected_town}",
-                  labels={
-                      'value': 'Percentage (%)', 
-                      'variable': 'Education Level'
-                  },
-                  barmode='group')
+# Check if the selected town has valid data
+if not town_data.empty:
+    # Create a bar chart using Plotly Express for education levels in the selected town
+    fig_town = px.bar(town_data, 
+                      x='Town', 
+                      y=education_columns, 
+                      title=f"Education Levels in {selected_town}",
+                      labels={
+                          'value': 'Percentage (%)', 
+                          'variable': 'Education Level'
+                      },
+                      barmode='group')
 
-st.plotly_chart(fig_town)
+    # Display the bar chart in Streamlit
+    st.plotly_chart(fig_town)
+else:
+    st.warning(f"No data available for {selected_town}")
