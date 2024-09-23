@@ -75,7 +75,7 @@ if button1:
 elif button2:
     fig1 = px.box(data, x='dists', y='PercentageofEducationlevelofresidents-vocational', 
                   title='University Education Levels by District', 
-                  labels={'PercentageofEducationlevelofresidents-university': 'University Education Level (%)'})
+                  labels={'PercentageofEducationlevelofresidents-vocational': 'Vocational Education Level (%)'})
     st.plotly_chart(fig1)
     
 
