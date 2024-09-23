@@ -104,51 +104,27 @@ fig750 = px.pie(district_secondary_education,
 
 st.plotly_chart(fig750)
 
-# Streamlit app layout
-st.title("Lebanon Education Levels by District")
+# Visualization 3: Bar chart for education levels in 4 towns in Mount Lebanon
+st.subheader("Education Levels in Selected Towns of Mount Lebanon")
 
-# Stacked Bar Chart of Education Levels by District
-st.subheader("Stacked Bar Chart of Education Levels by District")
-district_education_levels = data_clean.groupby('dists')[education_columns].mean().reset_index()
+# Define the four towns from Mount Lebanon to include
+selected_towns = ['Baabda', 'Bireh', 'Beit Meri', 'Chouf']
 
-fig3 = go.Figure()
+# Filter data for those towns
+mount_lebanon_towns = data_clean[data_clean['Town'].isin(selected_towns)]
 
-# University Education
-fig3.add_trace(go.Bar(x=district_education_levels['dists'], 
-                      y=district_education_levels['PercentageofEducationlevelofresidents-university'], 
-                      name='University Education', 
-                      marker_color='indianred'))
+# Create a bar chart using Plotly Express for education levels in the selected towns
+fig_bar = px.bar(mount_lebanon_towns, 
+                 x='Town', 
+                 y=education_columns, 
+                 title="Education Levels in Selected Mount Lebanon Towns",
+                 labels={
+                     'value': 'Percentage (%)', 
+                     'variable': 'Education Level'
+                 },
+                 barmode='group')
 
-# Secondary Education: Check if the column exists
-if 'PercentageofEducationlevelofresidents-secondary' in data_clean.columns:
-    fig3.add_trace(go.Bar(x=district_education_levels['dists'], 
-                          y=district_education_levels['PercentageofEducationlevelofresidents-secondary'], 
-                          name='Secondary Education', 
-                          marker_color='lightsalmon'))
-else:
-    st.warning("The 'PercentageofEducationlevelofresidents-secondary' column is missing from the dataset.")
-
-# Vocational Education
-fig3.add_trace(go.Bar(x=district_education_levels['dists'], 
-                      y=district_education_levels['PercentageofEducationlevelofresidents-vocational'], 
-                      name='Vocational Education', 
-                      marker_color='lightseagreen'))
-
-# Elementary Education
-fig3.add_trace(go.Bar(x=district_education_levels['dists'], 
-                      y=district_education_levels['PercentageofEducationlevelofresidents-elementary'], 
-                      name='Elementary Education', 
-                      marker_color='lightblue'))
-
-# Update the layout for the stacked bar chart
-fig3.update_layout(barmode='stack', 
-                   title='Education Levels by District', 
-                   xaxis_title='District', 
-                   yaxis_title='Percentage (%)', 
-                   legend_title='Education Level')
-
-# Display the chart
-st.plotly_chart(fig3)
+st.plotly_chart(fig_bar)
 
 # Line Chart of Education Levels Across Districts
 st.subheader("Education Levels Across Districts")
